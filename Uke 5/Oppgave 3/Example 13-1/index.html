@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <script defer src="13-1.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+    <h1 class="handle">Click Here to Reveal Hidden Text</h1>
+    <p>This paragraph is hidden. It appears when you click on the title.</p>
+</div>
+
+<div class="reveal">
+    <p>3.a) 
+        <br>Clicking the title will reveal a hidden paragraph, both within a div tag <br>
+        This is achieved by a Javascript code that changes the div tag from revelaed to reveal.
+    </p>
+    <p>3.b) 
+        <br>Expectation: The content of this new div should also be revealed when clicking the title.
+    <br>Result: The content overwrites the content in the first div.
+    </p>
+    <p>3.c)
+        <br>It now shows the content in the first div instead of the second div. 
+        <br>Probably has something to do with the for-loop and how Javascript run the code. 
+        <br>My assumption is that without the function makeReveal, the loop runs through the list elements. When we click on the title, the variable elt is the last item of the list.
+        <br>With the function, we send the first item in the list, elt = elements[i] where i = 0. It reveals the first div since the function takes the first item it is given. 
+        <br>Inside the function, it waits for us to click on the title and is why it doesn't run to the next iteration because it is waiting.
+    </p>
+</div>
+
+</body>
+</html>

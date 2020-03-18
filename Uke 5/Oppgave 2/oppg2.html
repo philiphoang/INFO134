@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="carA.js"></script>
+        <script src="personA.js"></script>
+
+        <script src="carB.js"></script>
+        <script src="personB.js"></script>
+
+        <script src="car.js"></script>
+        <script src="person.js"></script>
+
+        <script src="program.js"></script>
+    </head>
+    <body>
+        <ol type=a>
+            <p>Define a HTML-document that imports JS-files in this order</p>
+            <li>
+                <ol start=1>
+                    <li>person.js</li>
+                    <li>program.js</li>
+                    <p>constructCar() in program.js is not defined since 
+                        the file containing this function is not imported</p>
+                </ol>
+            </li>
+            <li>
+                <ol start=1>
+                <li>car.js</li>
+                <li>program.js</li>
+                <p>Same as last one. constructPerson() not defined</p> 
+                </ol>
+            </li>
+            <li>
+                <ol start=1>
+                    <li>person.js</li>
+                    <li>car.js</li>
+                    <li>program.js</li>
+                    <p>p.name() is not a function</p>
+                </ol>
+            </li>
+            <li>
+                <ol start=1>
+                    <li>car.js</li>
+                    <li>person.js</li>
+                    <li>person.js</li>
+                    <p>No error occurs since there is no functions get called</p>
+                </ol>
+            </li>
+            <li>Script</li>
+            <li>Script</li>
+            <li>Script</li>
+            <li></li>
+        </ol>
+
+
+        
+    </body>
+</html>

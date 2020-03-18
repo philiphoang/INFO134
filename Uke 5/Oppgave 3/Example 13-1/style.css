@@ -1,0 +1,10 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* CSS styles for this page */
+.reveal * {
+    display: none;
+} /* Children of class="reveal" are not shown */
+.reveal *.handle {
+    display: block;
+} /* Except for the class="handle" child */

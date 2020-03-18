@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Demonstrasjon</title>
+    <script type="text/javascript" src="js/demo.js">
+      function startProgram() {
+        var avsnittet = document.getElementById("avsnittet");
+        var nytt = '<a href="#">død  lenke</a>';
+        avsnittet.innerHTML = nytt;
+      }
+    </script>
+  </head>
+  <body>
+    <p id="avsnittet">
+      <a href="http://wildboy.uib.no">Wildboy</a>
+    </p>
+    <button onclick="startProgram();">Kill</button>
+  </body>
+</html>

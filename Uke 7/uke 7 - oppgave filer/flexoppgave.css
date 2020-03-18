@@ -1,0 +1,12 @@
+#container {
+    display:flex;
+    border-style:solid;
+    max-width:500px;
+    min-height:300px;
+}
+
+.innerContainer {
+    display:flex;
+    border-style:solid;
+    border-color:red;
+}

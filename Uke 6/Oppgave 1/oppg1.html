@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="oppg1.js"></script>
+    </head>
+    <body onload="version1()">
+        <h1>1 Hendelser</h1>
+        <ol start=1 type="a">
+            <li>
+                Click-event is not dependent on the device the user is using.
+            </li>
+            <br>
+            <li>
+                <button onclick="func1()">Button 1</button>
+                <button id="button2">Button 2</button>
+                <button id="button3">Button 3</button>
+            </li>
+            <br>
+            <li>
+                <button onclick="giveFunction()">Give function</button>
+                <button id="thatButton" disabled="true">Execute function</button>
+                <p id="text"></p>
+            </li>
+            <li>
+                <p>Body onload</p>
+                <p>Document onload</p>
+                <p>Window onload</p>
+            </li>
+        </ol>
+    </body>
+</html>

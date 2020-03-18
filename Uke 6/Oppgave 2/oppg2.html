@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="oppg2.js"></script>
+    </head>
+    <body>
+        <h1>2 Hendelseskøen</h1>
+        <ol type="a">
+            <li>Script: oppg2.js</li>
+            <br>
+            <li>Script: oppg2.js</li>
+            <li>
+                <p id="avsnittetMitt"></p>
+                <ol type=1>
+                    <li>Will not find the element since the javscript runs before the html-page has fully loaded.</li>
+                    <br>
+                    <li>Wrapping it with window.load makes sure that the page has completely loaded all content before a script gets executed.</li>
+                </ol>
+            </li>
+            <br>
+            <li>
+                <ol type=1>
+                    <li>The page used about 4 seconds to load</li>
+                    <br>
+                    <li>About the same as the first. The text appeared after the freeze.</li>
+                    <br>
+                    <li>The marked text will not appear until after the freeze is done.
+                        The page won't update because of the freeze. It updates the page after the four seconds. 
+                    </li>
+                    <br>
+                    <li>
+                        The message takes about 4 secounds after the user clicks ok on the first box.
+                    </li>
+                </ol>
+            </li>
+        </ol>
+    </body>
+</html>
