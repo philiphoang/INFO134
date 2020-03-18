@@ -1,35 +1,41 @@
 var befolkning = "http://wildboy.uib.no/~tpe056/folk/104857.json";
 
-var getJSON = function(url, callback) {
+var getJSON = function(url) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     
     xhr.onreadystatechange = function() {
-        var data = JSON.parse(xhr.responseText);
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var data = JSON.parse(xhr.responseText);
 
-        xhr.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var befolkningsArray = JSON.parse(this.responseText);
-                presentArray(befolkningsArray);
-            }
+            console.log(data);
+            getNames(data);
         }
     };
     
     xhr.send();
 }
 
-getJSON(befolkning)
+getJSON(befolkning);
 
-function presentArray(array) {
-    var htmlList = document.getElementById("ul_oversikt");
-    for (var i = 0; i < array.length; i++) {
-        var li = document.createElement("li");
+// Returner listen av alle kommunenavnene 
+function getNames(array) {
+    var table = document.getElementById("ul_befolkning");
+    
+    
+    for (var kommuner in array.elementer) {
+        var tr = document.createElement("tr"); //Table row
+        var td = document.createElement("td"); //
+        var tekstNavn = document.createTextNode(kommuner);
 
-        var text = document.createTextNode(
-            array.features[0]
-        );
-        li.appendChild(text);
+        td.appendChild(tekstNavn);
 
-        htmlList.appendChild(li);
+        tr.appendChild(td);
+
+        
+        console.log(kommuner.kommunenummer);
+
+        table.appendChild(tr);
+
     }
 }
