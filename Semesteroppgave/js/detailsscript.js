@@ -1,22 +1,38 @@
 var populationURL = "http://wildboy.uib.no/~tpe056/folk/104857.json";
-var sysselsatte = "http://wildboy.uib.no/~tpe056/folk/100145.json";
+var employedURL = "http://wildboy.uib.no/~tpe056/folk/100145.json";
 var utdanning = "http://wildboy.uib.no/~tpe056/folk/85432.json";
 
 var populationDataset = {};
 
 var populationInterface; 
 
+var employedInterface;
+
 readDataFromUrl(populationURL, function(x) {
-    populationInterface = new Interface(x);
+    populationInterface = new PopulationInterface(x);
 
     createTable(populationInterface);
 });
 
+readDataFromUrl(employedURL, function(x) {
+    employedInterface = new EmployedInterface(x);
+    //TODO: Lag en metode som henter ut table row (tr) ved id og legger data til den raden
+})
 
-function Interface(dataset) {
+//TODO
+//Flytt Interfaces til en egen fil 
+
+function EmployedInterface(dataset) {
     this.dataset = dataset;
-    this.getNames = function () {return names(this.dataset)};
-    this.getIDs = function () {return ids(this.dataset, this.getNames())};
+    this.getNames = function() {return names(this.dataset)};
+    this.getEmployedStats = function() {return employedStats(this.dataset)}
+}
+
+
+function PopulationInterface(dataset) {
+    this.dataset = dataset;
+    this.getNames = function() {return names(this.dataset)};
+    this.getIDs = function() {return ids(this.dataset, this.getNames())};
 };
 
 
@@ -29,7 +45,7 @@ function createTable(interface) {
     for (var i = 0; i < names.length; i++) {
         var tr = document.createElement("tr"); //Create new table row
         var nameEl = document.createElement("td"); //Table element
-        var idEl = document.createElement("td"); 
+        var idEl = document.createElement("td");
 
         var nameNode = document.createTextNode(names[i]);
         var idNode = document.createTextNode(ids[i]);
@@ -37,7 +53,7 @@ function createTable(interface) {
         nameEl.appendChild(nameNode);
         idEl.appendChild(idNode);
 
-        //Make cell contain a table with additional information 
+        tr.setAttribute("id", ids[i]);
         tr.appendChild(nameEl);
         tr.appendChild(idEl);
         
@@ -51,7 +67,7 @@ function readDataFromUrl(url, callback) {
     request.onreadystatechange = function () {
       if (request.readyState === 4 && request.status === 200) {
         var data = JSON.parse(request.responseText);
-        console.log(data);
+        console.log(data); //print 
         if (callback) {
           callback(data)
         }
