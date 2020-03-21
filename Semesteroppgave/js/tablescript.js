@@ -4,7 +4,7 @@ var populationInterface;
 
 readDataFromUrl(populationURL, function(x) {
     var data = x;
-    populationInterface = new Interface(data);
+    populationInterface = new PopulationInterface(data);
 
     createTable(populationInterface);
 });
