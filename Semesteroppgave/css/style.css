@@ -41,3 +41,27 @@ table.row-clickable tbody tr td a {
     display: block;
     padding: 8px;
 }
+
+nav {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+nav a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}

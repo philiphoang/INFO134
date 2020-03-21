@@ -1,4 +1,4 @@
-function names(data) {
+function empNames(data) {
     var list = []
     for (var x in data.elementer) {
         list.push(x);
@@ -7,7 +7,7 @@ function names(data) {
     return list;
 }
 
-function ids(data, names) {
+function empIds(data, names) {
     var list = []
 
     var i;

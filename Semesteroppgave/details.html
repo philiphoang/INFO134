@@ -2,25 +2,28 @@
 <html>
     <head>
         <!-- Interfaces -->
+        <script src="./js/interface//PopulationInterface.js"></script>
         <script src="./js/interface//EducationInterface.js"></script>
         <script src="./js/interface//EmployedInterface.js"></script>
-        <script src="./js/interface//PopulationInterface.js"></script>
 
         <!-- Properties -->
         <script src="./js/property/populationProperty.js"></script>
+        <script src="./js/property/educationProperty.js"></script>
         <script src="./js/property/employedProperty.js"></script>
 
         <script src="./js/detailsscript.js"></script>
         
         <link rel="stylesheet" type="text/css" href="./css/detailsstyle.css"/>
+        <link rel="stylesheet" type="text/css" href="./css/style.css"/>
 
         <meta charset="UTF-8">
     </head>
     <body>
         <nav>
-            <a href="index.html">Introduksjon</a>
-            <a href="table.html">Oversikt</a>
-            <a href="details.html">Detaljer</a>
+            <a href="index.html">Introduction</a>
+            <a href="table.html">Overview</a>
+            <a href="details.html">Details</a>
+            <a href="comparing.html">Comparing</a>
         </nav>
         <br>
         <input type="text" id="searchbox" onkeyup="search();" placeholder="Skriv inn kommunenummer">
@@ -30,7 +33,7 @@
                 <th>Municipality</th>
                 <th>Municipality number</th>
                 <th>Employed percent (2018)</th>
-                <th></th>
+                <th>Education percent (2017)</th>
             </table>
         </div>         
     </body>
