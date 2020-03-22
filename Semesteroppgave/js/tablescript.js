@@ -23,7 +23,7 @@ function Interface(dataset) {
 
     this.getPopuluationFigureMen = function (year) {
         return populationfigure(this.dataset, this.getNames(), "Menn", year);
-    }
+	}
 
     this.getPopuluationFigureWomen = function (year) {
         return populationfigure(this.dataset, this.getNames(), "Kvinner", year);

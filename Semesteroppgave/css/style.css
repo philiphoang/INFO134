@@ -2,17 +2,7 @@
     box-sizing: border-box;
 }
 
-  
-  #searchbox {
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-    width: 100%;
-    font-size: 16px;
-    padding: 12px 20px 12px 40px;
-    border: 1px solid #ddd;
-    margin-bottom: 12px;
-  }
-  
+
   #table {
     border-collapse: collapse;
     width: 100%;
@@ -43,7 +33,7 @@ table.row-clickable tbody tr td a {
 }
 
 nav {
-  margin: 0;
+  margin-bottom: 12px;
   padding: 0;
   overflow: hidden;
   background-color: #333;

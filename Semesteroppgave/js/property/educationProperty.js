@@ -1,7 +1,7 @@
 function eduNames(data) {
     var list = [];
     for (var x in data.elementer) { 
-        //Fix this shit 
+        //Fix this shit, remove municipality with 2017
         x = x.replace(/ *\(-2017*\) */g, '');
         list.push(x);
     }

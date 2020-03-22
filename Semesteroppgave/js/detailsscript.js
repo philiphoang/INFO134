@@ -131,8 +131,6 @@ function putEducationInTable(interface) {
 //Legg til id på rad
 //Legg til headers i Javascript istedet 
 
-
-
 function search() {
     var input, table, tr, td, i, txtValue;
     input = document.getElementById("searchbox");

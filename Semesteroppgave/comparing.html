@@ -1,7 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Interfaces -->
+        <script src="./js/interface//PopulationInterface.js"></script>
+        <script src="./js/interface//EducationInterface.js"></script>
+        <script src="./js/interface//EmployedInterface.js"></script>
+        
+        <!-- Properties -->
+        <script src="./js/property/populationProperty.js"></script>
+        <script src="./js/property/educationProperty.js"></script>
+        <script src="./js/property/employedProperty.js"></script>
+
+
+        <script src="./js/comparing.js"></script>
+
         <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="./css/comparingstyle.css"/>
 
         <meta charset="UTF-8">
     </head>
@@ -13,8 +27,20 @@
             <a href="comparing.html">Comparing</a>
         </nav>
 
-        <div id="">
+        <form id="compareForm">
+            <input type="text" id="searchbox1" class="search" placeholder="Type in municipality id">
+            <input type="text" id="searchbox2" class="search" placeholder="Type in municipality id">
+            <input type="submit" onclick="compareMunicipalities();" value="Submit">
+        </form>
 
+        <button onclick="compareMunicipalities();">Click me</button>
+
+        <div id="comparing">
+            <table id="compareTable" style="display: none;">
+                 <th></th>
+                 <th id="m1"></th>
+                 <th id="m2"></th>
+            </table>
         </div>
         
     </body>
