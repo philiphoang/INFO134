@@ -84,7 +84,7 @@ function putPopulationInTable(interface) {
 function putEmployedInTable(interface) {
     var names = interface.getNames();
     var ids = interface.getIDs();
-
+    console.log(ids.length)
     console.log("Employed: " + names.length)
 
     
@@ -101,7 +101,7 @@ function putEmployedInTable(interface) {
 
 
 function putEducationInTable(interface) {
-    var names = interface.getNames();
+    var names = interface.getAllNames();
     var ids = interface.getIDs();
 
     console.log("Education: " + names.length)
