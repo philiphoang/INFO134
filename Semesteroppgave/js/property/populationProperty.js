@@ -28,3 +28,21 @@ function populationfigure(data, names, gender, year) {
 
     return list
 }
+
+function populationFigureBothGenderFromMunicipalityAllYears(data, name) {
+    var list = [];
+
+    var men = data.elementer[name]["Menn"];
+    var women = data.elementer[name]["Kvinner"];
+
+    list.push(men); list.push(women);
+    return list;
+}
+
+function populationFromGenderFromMunicipalityAllYears(data, name, gender) {
+    console.log(gender)
+    if (gender == "Menn")
+        return populationFigureBothGenderFromMunicipalityAllYears(data, name)[0];
+    else if (gender == "Kvinner")
+        return populationFigureBothGenderFromMunicipalityAllYears(data, name)[1];
+}

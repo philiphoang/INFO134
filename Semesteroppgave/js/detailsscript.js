@@ -2,62 +2,110 @@ var populationURL = "http://wildboy.uib.no/~tpe056/folk/104857.json";
 var employedURL = "http://wildboy.uib.no/~tpe056/folk/100145.json";
 var educationURL = "http://wildboy.uib.no/~tpe056/folk/85432.json";
 
-//Gjør disse grensesnittene globalt 
-var populationInterface; 
-var employedInterface;
-var educationInterface;
+ 
+var populationInterface = new PopulationInterface(); //Grensensitt foreløpig begrenset til scope
+var employedInterface = new EmployedInterface();
+var educationInterface = new EducationInterface();
 
-// Maybe a solution 
-// var populationDataset = {} 
-
-// test(populationURL, populationDataset, function(x) {
-//   var populationInterface = new PopulationInterface(x); //Grensensitt foreløpig begrenset til scope
-
-//   putPopulationInTable(populationInterface);
-// });
+readDataFromUrl(populationURL, populationInterface, function() {console.log(populationInterface)});
+readDataFromUrl(employedURL, employedInterface, function() {console.log(employedInterface)});
+readDataFromUrl(educationURL, educationInterface, function() {console.log(educationInterface)});
 
 
-readDataFromUrl(populationURL, function(x) {
-    var populationInterface = new PopulationInterface(x); //Grensensitt foreløpig begrenset til scope
-
-    putPopulationInTable(populationInterface);
-});
-
-readDataFromUrl(employedURL, function(x) {
-    employedInterface = new EmployedInterface(x);
-
-    putEmployedInTable(employedInterface);
-})
-
-readDataFromUrl(educationURL, function(x) {
-    educationInterface = new EducationInterface(x);
-
-    putEducationInTable(educationInterface);
-});
-
-
-function readDataFromUrl(url, callback) {
+function readDataFromUrl(url, obj, callback) {
   var request = new XMLHttpRequest();
   request.open("GET", url)
   request.onreadystatechange = function () {
     if (request.readyState === 4 && request.status === 200) {
-      var data = JSON.parse(request.responseText);
-      console.log(data); //print 
+      obj.dataset = JSON.parse(request.responseText);
       if (callback) {
-        callback(data)
+          callback(obj.dataset)
       }
-
     };
   }
   request.send()
 }
- 
+
+
+function searchForMunicipality() { 
+	// var detailsDiv = document.getElementById("detailsDiv");
+	// detailsDiv.innerHTML = "";//Clear tables
+	
+	input = document.getElementById("searchbox").value;
+
+	if (input == "") {
+		var p = document.createElement("p");
+		p.appendChild(document.createTextNode("Empty field"));
+		document.body.appendChild(p);
+		return false;
+	}
+
+	if (true) { //Check if id exists
+		var id = input.toString();
+
+		// Change this 
+		var input1Edu2017 = educationInterface.getAllEducationByMunicipalityIdAndYear(id, 2017);
+
+		if (input1Edu2017 == "undefined") {
+			console.log("id doesnt exist")
+			return false;
+		}
+		
+		createTable(id);
+	}    
+
+	return false;
+}
+
+function createTable(id) {
+	var overviewDiv = document.getElementById("overviewDiv")
+	var table = document.getElementById("table");
+
+	var name = educationInterface.getNameById(id);
+	var population = populationInterface.getPopulationFigureBothGenderFromMunicipalityAllYears(name);
+	console.log(population)
+
+	var popmen = populationInterface.getPopulationFromGenderFromMunicipalityAllYears(name, "Menn");
+	var popwomen = populationInterface.getPopulationFromGenderFromMunicipalityAllYears(name, "Women");
+	var pop2018 = popmen[2018] + popwomen[2018]
+	
+	var edumen = interface.getHigherEducationLongByMunicipality(names[i], "Kvinner", 2017)
+	var eduwomen = educationInterface.getHigherEducationLongByMunicipality(names[i], "Menn", 2017)
+	var educationBothGender2017 = edumen + eduwomen; 
+
+	var emp2017
+	var employedNode = document.createTextNode(employedInterface.getEmployedStatsByMunicipality(names[i], "Begge kjønn", 2018));
+
+
+	console.log(popmen[2018] + popwomen[2018])
+
+
+	var tr = document.createElement("tr");
+
+	var td = document.createElement("td");
+
+}
+
+
+function createTableElement(text) {
+	var td = document.createElement("td");
+
+	var textNode = document.createTextNode(text)
+
+	td.appendChild(textNode);
+}
+
+
+
+
+
+
 
 function putPopulationInTable(interface) {
     var table = document.getElementById("table");
 
-    var names = interface.getNames();
-    var ids = interface.getIDs();
+    var names = populationInterface.getNames();
+    var ids = populationInterface.getIDs();
 
     console.log("Population: " + names.length)
 
@@ -82,8 +130,8 @@ function putPopulationInTable(interface) {
 }
 
 function putEmployedInTable(interface) {
-    var names = interface.getNames();
-    var ids = interface.getIDs();
+    var names = employedInterface.getNames();
+    var ids = employedInterface.getIDs();
     console.log(ids.length)
     console.log("Employed: " + names.length)
 
@@ -91,7 +139,7 @@ function putEmployedInTable(interface) {
     for (var i = 0; i < ids.length; i++) {
         var tr = document.getElementById(names[i]);
         var employedEl = document.createElement("td");
-        var employedNode = document.createTextNode(interface.getEmployedStatsByMunicipality(names[i], "Begge kjønn", 2018));
+        var employedNode = document.createTextNode(employedInterface.getEmployedStatsByMunicipality(names[i], "Begge kjønn", 2018));
         
         employedEl.appendChild(employedNode);
         
@@ -101,8 +149,8 @@ function putEmployedInTable(interface) {
 
 
 function putEducationInTable(interface) {
-    var names = interface.getAllNames();
-    var ids = interface.getIDs();
+    var names = educationInterface.getAllNames();
+    var ids = educationInterface.getIDs();
 
     console.log("Education: " + names.length)
 
@@ -115,7 +163,7 @@ function putEducationInTable(interface) {
         
         console.log(names[i]);
         console.log(i)
-        var educationBothGender2017 = interface.getHigherEducationLongByMunicipality(names[i], "Menn", 2017) + interface.getHigherEducationLongByMunicipality(names[i], "Kvinner", 2017)
+        var educationBothGender2017 = educationInterface.getHigherEducationLongByMunicipality(names[i], "Menn", 2017) + interface.getHigherEducationLongByMunicipality(names[i], "Kvinner", 2017)
         
         var educationNode = document.createTextNode(Math.round(educationBothGender2017 * 100) / 100);
 
@@ -125,33 +173,3 @@ function putEducationInTable(interface) {
 }
 
 
-
-//TODO
-//Lag en felles table function
-//Legg til id på rad
-//Legg til headers i Javascript istedet 
-
-function search() {
-    var input, table, tr, td, i, txtValue;
-    input = document.getElementById("searchbox");
-    table = document.getElementById("table");
-    tr = table.getElementsByTagName("tr");
-
-    
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[1]; //Søk etter kommunenummer
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.indexOf(input.value) > -1) {
-            table.style.display = "block"
-            tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }  
-      
-      if (input.value === "") {
-          table.style.display = "none";
-      }
-  }
-}

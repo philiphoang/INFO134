@@ -1,17 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- Interfaces -->
-        <script src="./js/interface//PopulationInterface.js"></script>
-        <script src="./js/interface//EducationInterface.js"></script>
-        <script src="./js/interface//EmployedInterface.js"></script>
-
-        <!-- Properties -->
-        <script src="./js/property/populationProperty.js"></script>
-        <script src="./js/property/educationProperty.js"></script>
-        <script src="./js/property/employedProperty.js"></script>
-
-        <script src="./js/detailsscript.js"></script>
+        
         
         <link rel="stylesheet" type="text/css" href="./css/detailsstyle.css"/>
         <link rel="stylesheet" type="text/css" href="./css/style.css"/>
@@ -26,16 +16,34 @@
             <a href="comparing.html">Comparing</a>
         </nav>
         <br>
-        <input type="text" id="searchbox" onkeyup="search();" placeholder="Skriv inn kommunenummer">
+        
+        <div id="detailsDiv">
+            <form id="detailsForm" onsubmit="return searchForMunicipality();">
+                <input type="t id="searchbox" class="search" placeholder="Type in municipality id">
+                <input type="submit">
+            </form>
+        </div>
 
-        <div id="oversikt" >
+        <div id="overviewDiv" >
             <table id="table" class="table table-hover row-clickable">
                 <th>Municipality</th>
                 <th>Municipality number</th>
                 <th>Employed percent (2018)</th>
                 <th>Education percent (2017)</th>
             </table>
-        </div>         
+        </div>
+        
+        <!-- Interfaces -->
+        <script src="./js/interface//PopulationInterface.js"></script>
+        <script src="./js/interface//EducationInterface.js"></script>
+        <script src="./js/interface//EmployedInterface.js"></script>
+
+        <!-- Properties -->
+        <script src="./js/property/populationProperty.js"></script>
+        <script src="./js/property/educationProperty.js"></script>
+        <script src="./js/property/employedProperty.js"></script>
+
+        <script src="./js/detailsscript.js"></script>
     </body>
 
 </html>

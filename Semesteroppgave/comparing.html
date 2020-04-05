@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
-
         <link rel="stylesheet" type="text/css" href="./css/style.css"/>
         <link rel="stylesheet" type="text/css" href="./css/compareTablestyle.css"/>
         <link rel="stylesheet" type="text/css" href="./css/comparingstyle.css"/>
@@ -17,17 +15,17 @@
             <a href="comparing.html">Comparing</a>
         </nav>
 
-        <form id="compareForm" onsubmit="return compareMunicipalities();">
+        <form id="compareForm" onsubmit="return readInput();">
             <input type="text" id="searchbox1" class="search" placeholder="Type in municipality id">
             <input type="text" id="searchbox2" class="search" placeholder="Type in municipality id">
             <input type="submit">
         </form>
 
         <div id="comparing">
-         
 
         </div>
 
+        
         <!-- Interfaces -->
         <script src="./js/interface//PopulationInterface.js"></script>
         <script src="./js/interface//EducationInterface.js"></script>

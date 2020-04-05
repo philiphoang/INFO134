@@ -18,18 +18,31 @@ function readDataFromUrl(url, obj, callback) {
 }
 
 
-
-function compareMunicipalities() {
+function readInput() {
+    var comparingDiv = document.getElementById("comparing");
+    comparingDiv.innerHTML = "";//Clear tables
+    
     input1 = document.getElementById("searchbox1").value;
     input2 = document.getElementById("searchbox2").value;
 
+    if (input1 == "" || input2 == "") {
+        var p = document.createElement("p");
+        p.appendChild(document.createTextNode("Empty field"));
+        comparingDiv.appendChild(p);
+        return false;
+    }
 
     if (true) { //Check if input is empty
-        var id1 = input1 .toString();
+        var id1 = input1.toString();
         var id2 = input2.toString();
 
         var input1Edu2017 = educationInterface.getAllEducationByMunicipalityIdAndYear(id1, 2017);
         var input2Edu2017 = educationInterface.getAllEducationByMunicipalityIdAndYear(id2, 2017);
+
+        if (input1Edu2017 == "undefined" || input2Edu2017 == "undefined") {
+            console.log("input doesnt exist")
+            return false;
+        }
 
         //Add municipality name to the list 
         input1Edu2017[0].unshift(educationInterface.getNameById(id1));
@@ -39,7 +52,6 @@ function compareMunicipalities() {
         input2Edu2017[1].unshift(educationInterface.getNameById(id2));
 
         createMunicipalityTable(input1Edu2017, input2Edu2017);
-
     }    
 
     return false;
@@ -53,48 +65,37 @@ function createMunicipalityTable(list1, list2) {
 
     var menList1 = list1[0];
     var menList2 = list2[0];
-
-    //TODO: Move this to createTable()
-    var tableMen = document.createElement("table");
-    var tr = document.createElement("tr");
-    var tableHeadMen = document.createElement("th");
-    var menTextNode = document.createTextNode("Menn");
-
-    tableHeadMen.appendChild(menTextNode);
-    tr.appendChild(tableHeadMen);
-    tableMen.appendChild(tr);
-    
-    document.getElementById("comparing").appendChild(tableMen);
-
-    addTableRow(tableMen, levelList, menList1, menList2);
+    var tableMen = createTable("Menn"); 
+    addTableRow(tableMen, levelList, menList1, menList2, "men");
 
     var womenList1 = list1[1];
     var womenList2 = list2[1];
-
-    var tableWomen = document.createElement("table");
-    var tr = document.createElement("tr");
-    var tableHeadWomen = document.createElement("th");
-    var womenTextNode = document.createTextNode("Kvinner");
-
-    tableHeadWomen.appendChild(womenTextNode);
-    tr.appendChild(tableHeadWomen);
-    tableWomen.appendChild(tr);
-
+    var tableWomen = createTable("Kvinner");
     document.getElementById("comparing").appendChild(tableWomen);
 
-
-    addTableRow(tableWomen, levelList, womenList1, womenList2);
+    addTableRow(tableWomen, levelList, womenList1, womenList2, "women");
 
     tableMen.style.display = "block";
     tableWomen.style.display = "block";
 }
 
-function createTable() {
-    //TODO: Create a common function for creating municipality table
+function createTable(gender) {
+    var table = document.createElement("table");
+    var tr = document.createElement("tr");
+    var tableHead = document.createElement("th");
+    var textNode = document.createTextNode(gender);
+    table.setAttribute("class", "table");
+
+    tableHead.appendChild(textNode);
+    tr.appendChild(tableHead);
+    table.appendChild(tr);
     
+    document.getElementById("comparing").appendChild(table);
+
+    return table;
 }
 
-function addTableRow(table, level, list1, list2) {
+function addTableRow(table, level, list1, list2, gender) {
     for (var i = 0; i < list1.length; i++) {
         var tr = document.createElement("tr");
         var leveltd = document.createElement("td");
@@ -109,13 +110,15 @@ function addTableRow(table, level, list1, list2) {
         tr.appendChild(data1td);
         tr.appendChild(data2td);
 
+        //Add winner beside each category/row?
+
         table.appendChild(tr);
     }
 
-    compareCells(list1, list2);
+    compareCells(list1, list2, gender);
 }
 
-function compareCells(list1, list2) {
+function compareCells(list1, list2, gender) {
     var counter1 = 0, counter2 = 0;
     var municipality1 = list1[0];
     var municipality2 = list2[0];
@@ -136,51 +139,29 @@ function compareCells(list1, list2) {
         }
     }  
 
-
-
-    compareWinner(municipality1, municipality2, counter1, counter2)
+    announceWinner(municipality1, municipality2, counter1, counter2, gender)
   
 }
 
-function compareWinner(municipality1, municipality2, counter1, counter2) {
+function announceWinner(municipality1, municipality2, counter1, counter2, gender) {
     var winnerTextNode;
+ 
+    
     var winner = document.createElement("p")
-  
+       
+    var string = "Winner in " + gender + "-category: ";
     if (counter1 > counter2) {
-        winnerTextNode = document.createTextNode(municipality1);
+        winnerTextNode = document.createTextNode(string + municipality1);
     }
     else if (counter1 < counter2) {
-        winnerTextNode = document.createTextNode(municipality2);
+        winnerTextNode = document.createTextNode(string + municipality2);
 
     }
     else {
-        winnerTextNode = document.createTextNode("It is a tie");
+        winnerTextNode = document.createTextNode("Tie between the municipalities");
     }
+
     winner.appendChild(winnerTextNode);
-
-    document.body.appendChild(winner);
-}
-
-
-/*
-    var womenList = list[1];
+    document.getElementById("comparing").appendChild(winner);
     
-    var compareTable = document.getElementById("compareTableMen");
-
-    var th = document.createElement("th");
-    var nameEl = document.createElement("td")
-    var nameNode = document.createTextNode(educationInterface.getNameById(id));
-    nameEl.appendChild(nameNode);
-    th.appendChild(nameEl);
-
-    var tr = document.createElement("tr");
-
-    var edu1 = document.createElement("td");
-    var edu1Node = document.createTextNode(menList);
-    edu1.appendChild(edu1Node);
-
-    tr.appendChild(edu1);
-
-    compareTable.appendChild(th);
-    compareTable.appendChild(tr);
-*/
+}
