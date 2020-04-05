@@ -28,8 +28,8 @@ function readDataFromUrl(url, obj, callback) {
 
 
 function searchForMunicipality() { 
-	// var detailsDiv = document.getElementById("detailsDiv");
-	// detailsDiv.innerHTML = "";//Clear tables
+	var overviewDiv = document.getElementById("overviewDiv");
+	overviewDiv.innerHTML = ""; //Clear tables
 	
 	input = document.getElementById("searchbox").value;
 
@@ -59,117 +59,116 @@ function searchForMunicipality() {
 
 function createTable(id) {
 	var overviewDiv = document.getElementById("overviewDiv")
-	var table = document.getElementById("table");
-
-	var name = educationInterface.getNameById(id);
-	var population = populationInterface.getPopulationFigureBothGenderFromMunicipalityAllYears(name);
-	console.log(population)
-
-	var popmen = populationInterface.getPopulationFromGenderFromMunicipalityAllYears(name, "Menn");
-	var popwomen = populationInterface.getPopulationFromGenderFromMunicipalityAllYears(name, "Women");
-	var pop2018 = popmen[2018] + popwomen[2018]
-	
-	var edumen = interface.getHigherEducationLongByMunicipality(names[i], "Kvinner", 2017)
-	var eduwomen = educationInterface.getHigherEducationLongByMunicipality(names[i], "Menn", 2017)
-	var educationBothGender2017 = edumen + eduwomen; 
-
-	var emp2017
-	var employedNode = document.createTextNode(employedInterface.getEmployedStatsByMunicipality(names[i], "Begge kjønn", 2018));
-
-
-	console.log(popmen[2018] + popwomen[2018])
-
-
-	var tr = document.createElement("tr");
-
-	var td = document.createElement("td");
-
-}
-
-
-function createTableElement(text) {
-	var td = document.createElement("td");
-
-	var textNode = document.createTextNode(text)
-
-	td.appendChild(textNode);
-}
-
-
-
-
-
-
-
-function putPopulationInTable(interface) {
-    var table = document.getElementById("table");
-
-    var names = populationInterface.getNames();
-    var ids = populationInterface.getIDs();
-
-    console.log("Population: " + names.length)
-
-    for (var i = 0; i < names.length; i++) {
-        var tr = document.createElement("tr"); //Create new table row
-
-        var nameEl = document.createElement("td"); //Table element
-        var idEl = document.createElement("td"); 
-
-        var nameNode = document.createTextNode(names[i]); //Municipality
-        var idNode = document.createTextNode(ids[i]); //Municipality ID
-
-        nameEl.appendChild(nameNode);
-        idEl.appendChild(idNode);
-
-        tr.setAttribute("id", names[i]);
-        tr.appendChild(nameEl);
-        tr.appendChild(idEl);
-
-        table.appendChild(tr);
-    }
-}
-
-function putEmployedInTable(interface) {
-    var names = employedInterface.getNames();
-    var ids = employedInterface.getIDs();
-    console.log(ids.length)
-    console.log("Employed: " + names.length)
-
     
-    for (var i = 0; i < ids.length; i++) {
-        var tr = document.getElementById(names[i]);
-        var employedEl = document.createElement("td");
-        var employedNode = document.createTextNode(employedInterface.getEmployedStatsByMunicipality(names[i], "Begge kjønn", 2018));
-        
-        employedEl.appendChild(employedNode);
-        
-        tr.appendChild(employedEl);
+    var table = document.createElement("table");
+    var rowHeader = document.createElement("tr");
+    table.setAttribute("class", "table table-hover row-clickable");
+    var tr = document.createElement("tr");
+    
+    createTableRowElement(table, rowHeader, "Municipality", "th");
+    createTableRowElement(table, rowHeader, "Population", "th");
+    createTableRowElement(table, rowHeader, "Employement (2018)", "th")
+    createTableRowElement(table, rowHeader, "Employement in % (2018)", "th");
+    createTableRowElement(table, rowHeader, "Education (2017)", "th")
+    createTableRowElement(table, rowHeader, "Education in % (2017)", "th");
+
+    //Add municipality name
+    var name = educationInterface.getNameById(id);
+    createTableRowElement(table, tr, name, "td");
+
+    //Add population
+    var poplist = populationInterface.getPopulationBothGenderFromNameAllYears(name);
+    console.log(poplist)
+	var pop2018 = poplist[2018];
+    createTableRowElement(table, tr, pop2018, "td");
+
+    //Add employed both gender (also percent)
+    var emplist = employedInterface.getEmployedRateByNameAllYears(name, "Begge kjønn");
+    var emp2018 = emplist[2018];
+    
+    var numEmployement = findNumberGivenPercent(emplist, poplist);
+
+    createTableRowElement(table, tr, numEmployement[2018], "td");
+    createTableRowElement(table, tr, emp2018, "td");
+
+    //Add education both gender
+    var edulist = educationInterface.getHigherEducationBothGenderFromNameAllYears(name);
+    var edu2017 = edulist[2017]; //This is percent 
+    
+    var numEducation = findNumberGivenPercent(edulist, poplist);
+
+    createTableRowElement(table, tr, numEducation[2017], "td");
+    createTableRowElement(table, tr, edu2017, "td");
+
+   
+  
+    //TODO: Create table for population-, employed and education growth
+    //Calculate growth by taking the past year and check it up with the next year
+    //For loop this shit 
+
+    var growthTable = document.createElement("table");
+    growthTable.setAttribute("class", "table");
+    var growthTr = document.createElement("tr");
+
+    createTableRowElement(growthTable, growthTr, "Year", "th");
+    createTableRowElement(growthTable, growthTr, "Number of change in population", "th");
+    createTableRowElement(growthTable, growthTr, "Population change in %", "th")
+
+    createTableRowElement(growthTable, growthTr, "Number of change in employement", "th");
+    createTableRowElement(growthTable, growthTr, "Employement change in %", "th")
+
+    createTableRowElement(growthTable, growthTr, "Number of change in education", "th");
+    createTableRowElement(growthTable, growthTr, "Population change in %", "th")
+  
+    //TODO: Somehow give the same row for each year
+    //Dobbel for-loop?? Each year, fill row, next year, fill row, repeat
+
+    for (var i = 2008; i <= 2017; i++) {
+        var yearTr = document.createElement("tr");
+
+        createTableRowElement(growthTable, yearTr, i, "td");
+
+        calculateGrowth(poplist[i - 1], poplist[i], growthTable, yearTr);
+
+        calculateGrowth(numEmployement[i - 1], numEmployement[i], growthTable, yearTr);
+
+        calculateGrowth(numEducation[i - 1], numEducation[i], growthTable, yearTr);
     }
+
+    overviewDiv.appendChild(table);
+
+    overviewDiv.appendChild(growthTable);
+
+}
+
+function findNumberGivenPercent(list, pop) {
+    var newList = {};
+
+    for (x in pop) {
+        var num = (pop[x] * list[x]) / 100; 
+        newList[x] = Math.round(num);
+    }
+    return newList; 
 }
 
 
-function putEducationInTable(interface) {
-    var names = educationInterface.getAllNames();
-    var ids = educationInterface.getIDs();
+function calculateGrowth(sumPast, sumNow, table, row) {
 
-    console.log("Education: " + names.length)
-
-    for (var i = 0; i < names.length; i++) {
-        var tr = document.getElementById(names[i]);
-        if (tr == null) {
-            tr = document.createElement("tr");
-        }
-        var educationEl = document.createElement("td");   
+        var sum = sumNow - sumPast;
+        var percent = ((sum) / sumPast) * 100;
+        var roundPercent = Math.round(percent * 100) / 100;
         
-        console.log(names[i]);
-        console.log(i)
-        var educationBothGender2017 = educationInterface.getHigherEducationLongByMunicipality(names[i], "Menn", 2017) + interface.getHigherEducationLongByMunicipality(names[i], "Kvinner", 2017)
-        
-        var educationNode = document.createTextNode(Math.round(educationBothGender2017 * 100) / 100);
-
-        educationEl.appendChild(educationNode);
-        tr.appendChild(educationEl);
-    }
+        createTableRowElement(table, row, sum, "td")
+        createTableRowElement(table, row, roundPercent, "td");
+    
 }
 
 
+function createTableRowElement(table, row, text, element) {
+	var element = document.createElement(element);
+    var textNode = document.createTextNode(text)
+    
+    element.appendChild(textNode);
+    row.appendChild(element);
+    table.appendChild(row)
+}

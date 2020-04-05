@@ -13,7 +13,12 @@ function EmployedInterface(dataset) {
         return employedStats(this.dataset, this.getNames(), "Menn", year);
     };
 
-    this.getEmployedStatsByMunicipality = function(name, gender, year) {
+    this.getEmployedStatsByMunicipalityByYear = function(name, gender, year) {
         return employedStatsByMunicipality(this.dataset, name, gender, year);
     };
+
+    this.getEmployedRateByNameAllYears = function(name, gender) {
+        return employedRateByNameAllYears(this.dataset, name, gender)
+    }
+
 }

@@ -1,0 +1,7 @@
+1. Make a general interface such that the other interfaces inherit this interface
+2. Put the common methods in this interface 
+3. Clean up variable names (make it consistent)
+4. Clean up CSS
+5.1 Filter out municipalities that doesn't have enough data 
+5.2 OR fill the missing values 
+6. Check input to user 

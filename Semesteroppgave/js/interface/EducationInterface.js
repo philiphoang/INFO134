@@ -36,7 +36,18 @@ function EducationInterface(dataset) {
     this.getAllEducationByMunicipalityIdAndYear = function(id, year) {
         return allEducationByMunicipalityIdAndYear(this.dataset, this.getAllNames(), id, year);
     }
+    
+    this.getHigherEducationLongBothGenderByNameAllYears = function(name) {
+        return higherEducationLongBothGenderByNameAllYears(this.dataset, name);
+    }
 
+    this.getHigherEducationLongByGenderByName = function(name, gender) {
+        return higherEducationLongByGenderByName(this.dataset, name, gender)
+    }
+
+    this.getHigherEducationBothGenderFromNameAllYears = function(name) {
+        return higherEducationBothGenderFromNameAllYears(this.dataset, name)
+    }
 }
 
 // "01": "Grunnskolenivå",

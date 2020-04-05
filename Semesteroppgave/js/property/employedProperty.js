@@ -28,18 +28,11 @@ function employedStats(data, names, gender, year) {
     return list;
 }
 
-function populationfigure(data, names, gender, year) {
-    var list = []
-
-    var i;
-    for (i = 0; i < names.length; i++) {
-        list.push(data.elementer[names[i]][gender][year]);
-    }
-
-    return list
+function employedStatsByMunicipality(data, name, gender, year) {
+    return data.elementer[name][gender][year];
 }
 
 
-function employedStatsByMunicipality(data, name, gender, year) {
-    return data.elementer[name][gender][year];
+function employedRateByNameAllYears(data, name, gender) {
+    return data.elementer[name][gender];
 }

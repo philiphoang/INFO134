@@ -25,6 +25,10 @@ function PopulationInterface(dataset) {
         return populationFromGenderFromMunicipalityAllYears(this.dataset, name, gender)
     }
 
+    this.getPopulationBothGenderFromNameAllYears = function(name) {
+        return populationBothGenderFromNameAllYears(this.dataset, name);
+    }
+
 
     /* TODO:
     Lag en generell metode som henter ut al 

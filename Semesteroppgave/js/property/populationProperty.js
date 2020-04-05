@@ -40,9 +40,22 @@ function populationFigureBothGenderFromMunicipalityAllYears(data, name) {
 }
 
 function populationFromGenderFromMunicipalityAllYears(data, name, gender) {
-    console.log(gender)
     if (gender == "Menn")
         return populationFigureBothGenderFromMunicipalityAllYears(data, name)[0];
     else if (gender == "Kvinner")
         return populationFigureBothGenderFromMunicipalityAllYears(data, name)[1];
 }
+
+function populationBothGenderFromNameAllYears(data, name) {
+    var obj = {}
+    var men = data.elementer[name]["Menn"];
+    var women = data.elementer[name]["Kvinner"];
+
+    for (x in men) {
+        obj[x] = men[x] + women[x]
+    }
+
+    return obj;
+}
+
+//Lag en funksjon som tar alle data opptil et viss år 

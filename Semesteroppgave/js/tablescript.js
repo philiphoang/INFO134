@@ -102,21 +102,17 @@ function readDataFromUrl(url, readData) {
     table = document.getElementById("table");
     tr = table.getElementsByTagName("tr");
 
-    
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[1]; //Søk etter kommunenummer
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.indexOf(input.value) > -1) {
-            table.style.display = "block"
             tr[i].style.display = "";
         } else {
           tr[i].style.display = "none";
         }
       }  
       
-      if (input.value === "") {
-          table.style.display = "none";
-      }
+
     }
   }

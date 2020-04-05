@@ -41,13 +41,22 @@ function education(data, names, level, year) {
     return list;
 }
 
-function higherEducationLongMenByMunicipality(data, name, year) {
-    return data.elementer[name]["04a"]["Menn"][year];
+function higherEducationLongBothGenderByNameAllYears(data, name) {
+    var list = [];
+
+    var men = data.elementer[name]["04a"]["Menn"];
+    var women = data.elementer[name]["04a"]["Kvinner"];
+
+    list.push(men); list.push(women);
+
+    return list;
 }
 
-function higherEducationLongWomenByMunicipality(data, name, year) {
-    return data.elementer[name]["04a"]["Kvinner"][year];
-
+function higherEducationLongByGenderByName(data, name, gender) {
+    if (gender == "Menn")
+        return higherEducationLongBothGenderByNameAllYears(data, name)[0];
+    else if (gender == "Kvinner")
+        return higherEducationLongBothGenderByNameAllYears(data, name)[1];
 }
 
 function higherEducationLongByMunicipality(data, name, gender, year) {
@@ -72,6 +81,20 @@ function allEducationByMunicipalityIdAndYear(data, names, id, year) {
     list.push(listMen); list.push(listWomen);
     return list;
 }
+
+
+function higherEducationBothGenderFromNameAllYears(data, name) {
+    var obj = {}
+    var men = data.elementer[name]["04a"]["Menn"];
+    var women = data.elementer[name]["04a"]["Kvinner"];
+
+    for (x in men) {
+        obj[x] = (men[x] + women[x])/2
+    }
+
+    return obj;
+}
+
 
 
 

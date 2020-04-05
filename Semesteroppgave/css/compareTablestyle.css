@@ -1,12 +1,13 @@
 .table {
+    margin-top: 10px;
     border-collapse: collapse;
     width: 100%;
-    border: 1px solid #ddd;
+    border: 3px solid #ddd;
     font-size: 18px;
 }
   
-.table th, #table td {
-    text-align: left;
+.table th, .table td {
+    text-align: center;
 	padding: 12px;
 }
   
