@@ -2,7 +2,7 @@ function PopulationInterface(dataset) {
     this.dataset = dataset;
 
     this.getNames = function () {
-        return names(this.dataset);
+        return popnames(this.dataset);
     };
 
     this.getIDs = function () {

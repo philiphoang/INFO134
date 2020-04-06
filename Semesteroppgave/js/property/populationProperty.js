@@ -1,5 +1,5 @@
-function names(data) {
-    var list = []
+function popnames(data) {
+    var list = [];
     for (var x in data.elementer) {
         list.push(x);
     }

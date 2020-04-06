@@ -3,16 +3,16 @@ var employedURL = "http://wildboy.uib.no/~tpe056/folk/100145.json";
 var educationURL = "http://wildboy.uib.no/~tpe056/folk/85432.json";
 
  
-var populationInterface = new PopulationInterface(); //Grensensitt foreløpig begrenset til scope
+var populationInterface = new PopulationInterface();
 var employedInterface = new EmployedInterface();
 var educationInterface = new EducationInterface();
 
-readDataFromUrl(populationURL, populationInterface, function() {console.log(populationInterface)});
-readDataFromUrl(employedURL, employedInterface, function() {console.log(employedInterface)});
-readDataFromUrl(educationURL, educationInterface, function() {console.log(educationInterface)});
+load(populationURL, populationInterface, function() {console.log(populationInterface)});
+load(employedURL, employedInterface, function() {console.log(employedInterface)});
+load(educationURL, educationInterface, function() {console.log(educationInterface)});
 
 
-function readDataFromUrl(url, obj, callback) {
+function load(url, obj, callback) {
   var request = new XMLHttpRequest();
   request.open("GET", url)
   request.onreadystatechange = function () {
@@ -26,35 +26,20 @@ function readDataFromUrl(url, obj, callback) {
   request.send()
 }
 
-
-function searchForMunicipality() { 
-	var overviewDiv = document.getElementById("overviewDiv");
+function validateInput() {
+    var list = populationInterface.getIDs();
+    var overviewDiv = document.getElementById("overviewDiv");
 	overviewDiv.innerHTML = ""; //Clear tables
-	
-	input = document.getElementById("searchbox").value;
 
-	if (input == "") {
-		var p = document.createElement("p");
-		p.appendChild(document.createTextNode("Empty field"));
-		document.body.appendChild(p);
-		return false;
-	}
+    var input = document.getElementById("searchbox");
+    if (!list.includes(input.value)) {
+        overviewDiv.appendChild(document.createTextNode("Not valid"));
+        return false;
+    }
+    else  
+        createTable(input.value.toString());
 
-	if (true) { //Check if id exists
-		var id = input.toString();
-
-		// Change this 
-		var input1Edu2017 = educationInterface.getAllEducationByMunicipalityIdAndYear(id, 2017);
-
-		if (input1Edu2017 == "undefined") {
-			console.log("id doesnt exist")
-			return false;
-		}
-		
-		createTable(id);
-	}    
-
-	return false;
+    return false;
 }
 
 function createTable(id) {
@@ -62,25 +47,28 @@ function createTable(id) {
     
     var table = document.createElement("table");
     var rowHeader = document.createElement("tr");
-    table.setAttribute("class", "table table-hover row-clickable");
+
     var tr = document.createElement("tr");
-    
+
+    var thead = document.createElement("thead");
     createTableRowElement(table, rowHeader, "Municipality", "th");
     createTableRowElement(table, rowHeader, "Population", "th");
     createTableRowElement(table, rowHeader, "Employement (2018)", "th")
     createTableRowElement(table, rowHeader, "Employement in % (2018)", "th");
     createTableRowElement(table, rowHeader, "Education (2017)", "th")
     createTableRowElement(table, rowHeader, "Education in % (2017)", "th");
+    thead.appendChild(rowHeader);
+    table.appendChild(thead);
 
     //Add municipality name
     var name = educationInterface.getNameById(id);
-    createTableRowElement(table, tr, name, "td");
+    createTableRowElement(table, tr, name, "td", "Municipality");
 
     //Add population
     var poplist = populationInterface.getPopulationBothGenderFromNameAllYears(name);
     console.log(poplist)
 	var pop2018 = poplist[2018];
-    createTableRowElement(table, tr, pop2018, "td");
+    createTableRowElement(table, tr, pop2018, "td", "Population");
 
     //Add employed both gender (also percent)
     var emplist = employedInterface.getEmployedRateByNameAllYears(name, "Begge kjønn");
@@ -88,8 +76,8 @@ function createTable(id) {
     
     var numEmployement = findNumberGivenPercent(emplist, poplist);
 
-    createTableRowElement(table, tr, numEmployement[2018], "td");
-    createTableRowElement(table, tr, emp2018, "td");
+    createTableRowElement(table, tr, numEmployement[2018], "td", "Employement (2018)");
+    createTableRowElement(table, tr, emp2018, "td", "Employement in % (2018)");
 
     //Add education both gender
     var edulist = educationInterface.getHigherEducationBothGenderFromNameAllYears(name);
@@ -97,18 +85,13 @@ function createTable(id) {
     
     var numEducation = findNumberGivenPercent(edulist, poplist);
 
-    createTableRowElement(table, tr, numEducation[2017], "td");
-    createTableRowElement(table, tr, edu2017, "td");
-
-   
-  
-    //TODO: Create table for population-, employed and education growth
-    //Calculate growth by taking the past year and check it up with the next year
-    //For loop this shit 
+    createTableRowElement(table, tr, numEducation[2017], "td", "Education (2017)");
+    createTableRowElement(table, tr, edu2017, "td", "Education in % (2017)");
 
     var growthTable = document.createElement("table");
     growthTable.setAttribute("class", "table");
     var growthTr = document.createElement("tr");
+    var growthThead = document.createElement("thead");
 
     createTableRowElement(growthTable, growthTr, "Year", "th");
     createTableRowElement(growthTable, growthTr, "Number of change in population", "th");
@@ -119,26 +102,37 @@ function createTable(id) {
 
     createTableRowElement(growthTable, growthTr, "Number of change in education", "th");
     createTableRowElement(growthTable, growthTr, "Population change in %", "th")
+
+    growthThead.appendChild(growthTr);
+    growthTable.appendChild(growthThead);
   
-    //TODO: Somehow give the same row for each year
-    //Dobbel for-loop?? Each year, fill row, next year, fill row, repeat
 
     for (var i = 2008; i <= 2017; i++) {
         var yearTr = document.createElement("tr");
 
-        createTableRowElement(growthTable, yearTr, i, "td");
+        createTableRowElement(growthTable, yearTr, i, "td", "Year");
 
-        calculateGrowth(poplist[i - 1], poplist[i], growthTable, yearTr);
+        calculateGrowth(poplist[i - 1], poplist[i], growthTable, yearTr, "Number of change in population", "Population change in %");
 
-        calculateGrowth(numEmployement[i - 1], numEmployement[i], growthTable, yearTr);
+        calculateGrowth(numEmployement[i - 1], numEmployement[i], growthTable, yearTr, "Number of change in employement", "Employement change in %");
 
-        calculateGrowth(numEducation[i - 1], numEducation[i], growthTable, yearTr);
+        calculateGrowth(numEducation[i - 1], numEducation[i], growthTable, yearTr, "Number of change in education", "Population change in %");
     }
 
     overviewDiv.appendChild(table);
 
     overviewDiv.appendChild(growthTable);
 
+}
+
+function createTableRowElement(table, row, text, element, label) {
+	var element = document.createElement(element);
+    element.setAttribute("data-label", label)
+    var textNode = document.createTextNode(text)
+    
+    element.appendChild(textNode);
+    row.appendChild(element);
+    table.appendChild(row)
 }
 
 function findNumberGivenPercent(list, pop) {
@@ -152,23 +146,15 @@ function findNumberGivenPercent(list, pop) {
 }
 
 
-function calculateGrowth(sumPast, sumNow, table, row) {
+function calculateGrowth(sumPast, sumNow, table, row, title1, title2) {
 
         var sum = sumNow - sumPast;
         var percent = ((sum) / sumPast) * 100;
         var roundPercent = Math.round(percent * 100) / 100;
         
-        createTableRowElement(table, row, sum, "td")
-        createTableRowElement(table, row, roundPercent, "td");
-    
+        createTableRowElement(table, row, sum, "td", title1)
+        createTableRowElement(table, row, roundPercent, "td", title2);
+
 }
 
 
-function createTableRowElement(table, row, text, element) {
-	var element = document.createElement(element);
-    var textNode = document.createTextNode(text)
-    
-    element.appendChild(textNode);
-    row.appendChild(element);
-    table.appendChild(row)
-}

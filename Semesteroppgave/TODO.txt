@@ -5,3 +5,5 @@
 5.1 Filter out municipalities that doesn't have enough data 
 5.2 OR fill the missing values 
 6. Check input to user 
+7. Folder structure
+8. Clean up HTML (move common elements to one file (nav, header, footer))

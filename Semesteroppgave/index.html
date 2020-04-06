@@ -1,27 +1,43 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="./css/mainstyle.css"/>
 
         <meta charset="UTF-8">
     </head>
     <body>
         <nav>
             <a href="index.html">Introduction</a>
-            <a href="table.html">Overview</a>
+            <a href="overview.html">Overview</a>
             <a href="details.html">Details</a>
             <a href="comparing.html">Comparing</a>
         </nav>
 
         <div id="introduction">
-            <h2>Introduksjon</h2>
+            <h2>Introduction</h2>
             <p>
-                Nettside i sammenheng med INFO134 Semesteroppgave.
-                <br>
-                Dataene som blir brukt er modifiserte kopier fra Norges befolkning.
+                The data used in this project are modified copies of Norges befolkning from website <a href="https://www.ssb.no/">https://www.ssb.no/</a>.
             </p>
+            <h4>Pages</h4>
+            <ul> 
+                <li>Overview: List over all the municipalities (as of 2018) with population data.</li>
+                <li>Details: Get more detailed data of a given municipality such as population, education and employement.</li>
+                <li>Comparing: Compare education levels of two given municipalities and see which municipality comes on top</li>
+            </ul>       
+            <h4>Data used in this project:</h4>
+            <ul> 
+                <li>Population: <a href="http://data.ssb.no/api/v0/dataset/104857?lang=no">Dataset nr. 104857</a></li>
+                <li>Employement: <a href="http://data.ssb.no/api/v0/dataset/100145?lang=no">Dataset nr. 100145</a></li>
+                <li>Education: <a href="http://data.ssb.no/api/v0/dataset/85432?lang=no">Dataset nr. 85432</a></li>
+            </ul>
+            <p>Note that the data used in this project might not be accurate as they are modified copies.</p>
+            <p>The datasets are different from eachother as education dataset contains municipalities before 2018 in contrast to the two others.</p>
+            <p>Page Comparing is the only page that are able to show municipalities before 2018.</p>
+            <p> </p>
         </div>
-        
-    </body>
 
+        <footer>
+            <i>Website created in the context of INFO134 Semester thesis.</i>
+        </footer>
+    </body>
 </html>

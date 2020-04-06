@@ -1,16 +1,17 @@
 function EducationInterface(dataset) {
     this.dataset = dataset;
 
-    this.getAllNames = function () {
+    this.getAllNames = function() {
         return eduAllNames(this.dataset);
     };
+
 
     this.getEduNamesExcept2017 = function () {
         return eduNamesExcept2017(this.dataset);
     }
 
-    this.getIDs = function () {
-        return eduIds(this.dataset, this.getAllNames(), this.getAllNames());
+    this.getIDs = function() {
+        return eduIds(this.dataset, this.getAllNames());
     };
 
     this.getNameById = function(id) {

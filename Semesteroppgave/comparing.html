@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="./css/style.css"/>
-        <link rel="stylesheet" type="text/css" href="./css/compareTablestyle.css"/>
-        <link rel="stylesheet" type="text/css" href="./css/comparingstyle.css"/>
+        <link rel="stylesheet" type="text/css" href="./css/tablestyle.css"/>
+        <link rel="stylesheet" type="text/css" href="./css/mainstyle.css"/>
 
         <meta charset="UTF-8">
     </head>
     <body>
         <nav>
             <a href="index.html">Introduction</a>
-            <a href="table.html">Overview</a>
+            <a href="overview.html">Overview</a>
             <a href="details.html">Details</a>
             <a href="comparing.html">Comparing</a>
         </nav>
 
         <form id="compareForm" onsubmit="return readInput();">
-            <input type="text" id="searchbox1" class="search" placeholder="Type in municipality id">
-            <input type="text" id="searchbox2" class="search" placeholder="Type in municipality id">
+            <input type="text" id="searchbox1" class="searchbox" placeholder="Type in municipality id">
+            <input type="text" id="searchbox2" class="searchbox" placeholder="Type in municipality id">
             <input type="submit">
         </form>
 
@@ -37,5 +36,9 @@
         <script src="./js/property/employedProperty.js"></script>
 
         <script src="./js/comparingscript.js"></script>
+
+        <footer>
+            <i>Website created in the context of INFO134 Semester thesis.</i>
+        </footer>
     </body>
 </html>
