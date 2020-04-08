@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        
+    <head>     
         <link rel="stylesheet" type="text/css" href="./css/tablestyle.css"/>
         <link rel="stylesheet" type="text/css" href="./css/mainstyle.css"/>
 
@@ -15,28 +14,29 @@
             <a href="comparing.html">Comparing</a>
         </nav>
         
-        <div id="detailsDiv">
-            <form id="detailsForm" onsubmit="return validateInput();">
-                <input type="text" id="searchbox" class="searchbox" placeholder="Type in municipality id">
-                <input id="submit-btn" type="submit">
-            </form>
-        </div>
-
-        <div id="overviewDiv" >
-
-        </div>
+        <form id="detailsForm" onsubmit="return readInput();">
+            <input type="text" id="searchbox" class="searchbox" placeholder="Type in municipality id">
+            <input id="submit-btn" type="submit">
+        </form>
+   
+        <div id="detailsDiv"></div>
+        
+        <!-- Data -->
+        <script src="./js/data/urls.js"></script>
+        
+        <!-- Properties -->
+        <script src="./js/property/mainProperty.js"></script>
+        <script src="./js/property/populationProperty.js"></script>
+        <script src="./js/property/educationProperty.js"></script>
+        <script src="./js/property/employedProperty.js"></script>
         
         <!-- Interfaces -->
         <script src="./js/interface/PopulationInterface.js"></script>
         <script src="./js/interface/EducationInterface.js"></script>
         <script src="./js/interface/EmployedInterface.js"></script>
 
-        <!-- Properties -->
-        <script src="./js/property/populationProperty.js"></script>
-        <script src="./js/property/educationProperty.js"></script>
-        <script src="./js/property/employedProperty.js"></script>
-
-        <script src="./js/detailsscript.js"></script>
+        <!-- Page script-->
+        <script src="./js/pagescript/detailsscript.js"></script>
 
         <footer>
             <i>Website created in the context of INFO134 Semester thesis.</i>

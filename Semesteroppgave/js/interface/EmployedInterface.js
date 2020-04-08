@@ -1,12 +1,17 @@
+/**
+ * Interface for employement 
+ * 
+ * @param {String} url Link to the dataset  
+ */
 function EmployedInterface(dataset) {
     this.dataset = dataset;
 
     this.getNames = function() {
-        return empNames(this.dataset);
+        return names(this.dataset);
     };
 
     this.getIDs = function() {
-        return empIds(this.dataset, this.getNames());
+        return ids(this.dataset, this.getNames());
     };
 
     this.getEmployedStatsMenn = function(year) {
@@ -14,11 +19,17 @@ function EmployedInterface(dataset) {
     };
 
     this.getEmployedStatsByMunicipalityByYear = function(name, gender, year) {
-        return employedStatsByMunicipality(this.dataset, name, gender, year);
+        return employedStatsByMunicipalityByYear(this.dataset, name, gender, year);
     };
 
-    this.getEmployedRateByNameAllYears = function(name, gender) {
-        return employedRateByNameAllYears(this.dataset, name, gender)
+    this.getEmployedStatsByNameAllYears = function(name, gender) {
+        return employedstatsByNameAllYears(this.dataset, name, gender)
     }
 
 }
+
+//Initialize interface for global use
+var employedInterface = new EmployedInterface();
+
+//Read and parse URL, and give it to the interface
+load(employedURL, employedInterface, function() { console.log(employedInterface)});

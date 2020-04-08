@@ -1,8 +1,13 @@
-function PopulationInterface(dataset) {
-    this.dataset = dataset;
+/**
+ * Interface for population 
+ * 
+ * @param {String} url Link to the dataset  
+ */
+function PopulationInterface(url) {
+    this.dataset = url;
 
     this.getNames = function () {
-        return popnames(this.dataset);
+        return names(this.dataset);
     };
 
     this.getIDs = function () {
@@ -10,7 +15,7 @@ function PopulationInterface(dataset) {
     };
 
     this.getPopuluationFigureMen = function (year) {
-        return populationfigure(this.dataset, this.getNames(), "Menn", year);
+        return populationFigure(this.dataset, this.getNames(), "Menn", year);
     }
 
     this.getPopuluationFigureWomen = function (year) {
@@ -29,20 +34,10 @@ function PopulationInterface(dataset) {
         return populationBothGenderFromNameAllYears(this.dataset, name);
     }
 
-
-    /* TODO:
-    Lag en generell metode som henter ut al 
-    Deretter, lag metoder som henter ut spesifik data fra denne generelle metoden
-
-    getPopulationBothGenderAllYears() {
-        return et objekt med to lister
-    }
-
-
-    bruk de tidligere metodene
-    getPopulationBothGenderSingleYear(year)
-        
-    getPopulationMenAllYears()
-        return 
-    */
 };
+
+//Initialize interface for global use
+var populationInterface = new PopulationInterface();
+
+//Read and parse URL, and give it to the interface
+load(populationURL, populationInterface, function() { console.log(populationInterface)});

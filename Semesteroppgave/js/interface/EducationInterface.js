@@ -1,17 +1,17 @@
-function EducationInterface(dataset) {
-    this.dataset = dataset;
+/**
+ * Interface for education 
+ * 
+ * @param {String} url Link to the dataset  
+ */
+function EducationInterface(url) {
+    this.dataset = url;
 
     this.getAllNames = function() {
-        return eduAllNames(this.dataset);
+        return names(this.dataset);
     };
 
-
-    this.getEduNamesExcept2017 = function () {
-        return eduNamesExcept2017(this.dataset);
-    }
-
     this.getIDs = function() {
-        return eduIds(this.dataset, this.getAllNames());
+        return ids(this.dataset, this.getAllNames());
     };
 
     this.getNameById = function(id) {
@@ -20,6 +20,10 @@ function EducationInterface(dataset) {
 
     this.getEducation = function(level, year) {
         return education(this.dataset, this.getNames, level, year);
+    }
+
+    this.getEducationLevelBothGenderByNameAllYears = function(name, level) {
+        return educationLevelBothGenderByNameAllYears(this.dataset, name, level);
     }
 
     this.getHigherEducationLongMenByMunicipality = function(name, year) {
@@ -49,11 +53,11 @@ function EducationInterface(dataset) {
     this.getHigherEducationBothGenderFromNameAllYears = function(name) {
         return higherEducationBothGenderFromNameAllYears(this.dataset, name)
     }
+
 }
 
-// "01": "Grunnskolenivå",
-// "02a": "Videregående skole-nivå",
-// "11": "Fagskolenivå",
-// "03a": "Universitets- og høgskolenivå kort",
-// "04a": "Universitets- og høgskolenivå lang",
-// "09a": "Uoppgitt eller ingen fullført utdanning"
+//Initialize interface for global use
+var educationInterface = new EducationInterface();
+
+//Read and parse URL, and give it to the interface
+load(educationURL, educationInterface, function() { console.log(educationInterface)});
